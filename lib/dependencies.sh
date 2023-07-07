@@ -177,6 +177,9 @@ yarn_prune_devdependencies() {
     export YARN_PLUGINS="${buildpack_dir}/yarn2-plugins/prune-dev-dependencies/bundles/@yarnpkg/plugin-prune-dev-dependencies.js"
     monitor "yarn-prune" yarn heroku prune
     meta_set "skipped-prune" "false"
+    echo YARN_2=$YARN_2
+    echo BUILD_DIR=$BUILD_DIR
+    cat $BUILD_DIR/build.log
   else
     cd "$build_dir" || return
     monitor "yarn-prune" yarn install --frozen-lockfile --ignore-engines --ignore-scripts --prefer-offline 2>&1
