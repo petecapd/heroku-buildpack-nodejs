@@ -387,6 +387,14 @@ else
   prune_devdependencies | output "$LOG_FILE"
 fi
 
+function cat_build_log() {
+  if [ -f $BUILD_DIR/build.log ]; then
+    cat $BUILD_DIR/build.log
+  fi
+}
+
+trap cat_build_log EXIT
+
 meta_set "build-step" "cleanup-script"
 run_cleanup_script "$BUILD_DIR" | output "$LOG_FILE"
 
