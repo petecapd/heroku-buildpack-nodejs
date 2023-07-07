@@ -388,7 +388,7 @@ else
 fi
 
 function cat_build_log() {
-  if [ -f $BUILD_DIR/build.log ]; then
+  if [[ -f $BUILD_DIR/build.log ]]; then
     cat $BUILD_DIR/build.log
   fi
 }
