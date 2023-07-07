@@ -359,6 +359,16 @@ cache_build() {
   meta_time "save-cache-time" "$cache_build_start_time"
 }
 
+function cat_build_log() {
+  echo here1
+  if [[ -f $BUILD_DIR/build.log ]]; then
+    echo here2
+    cat $BUILD_DIR/build.log
+  fi
+}
+
+trap cat_build_log EXIT
+
 prune_devdependencies() {
   if $YARN || $YARN_2; then
     yarn_prune_devdependencies "$BUILD_DIR" "$YARN_CACHE_FOLDER" "$BP_DIR"
@@ -386,14 +396,6 @@ else
   header "Pruning devDependencies" | output "$LOG_FILE"
   prune_devdependencies | output "$LOG_FILE"
 fi
-
-function cat_build_log() {
-  if [[ -f $BUILD_DIR/build.log ]]; then
-    cat $BUILD_DIR/build.log
-  fi
-}
-
-trap cat_build_log EXIT
 
 meta_set "build-step" "cleanup-script"
 run_cleanup_script "$BUILD_DIR" | output "$LOG_FILE"
